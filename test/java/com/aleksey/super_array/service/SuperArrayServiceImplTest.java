@@ -1,8 +1,10 @@
-package com.aleksey.super_array.service;
+package java.com.aleksey.super_array.service;
 
 import com.aleksey.super_array.entity.SuperArray;
 import com.aleksey.super_array.excepsion.SuperArrayIndexOutOfBoundsException;
 import com.aleksey.super_array.excepsion.SuperArrayNullPointerException;
+import com.aleksey.super_array.service.SuperArrayService;
+import com.aleksey.super_array.service.impl.SuperArrayServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
