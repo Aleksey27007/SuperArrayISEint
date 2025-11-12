@@ -1,10 +1,11 @@
-package com.aleksey.super_array.service;
+package com.aleksey.super_array.service.impl;
 
 import com.aleksey.super_array.entity.SuperArray;
 import com.aleksey.super_array.excepsion.SuperArrayIndexOutOfBoundsException;
 import com.aleksey.super_array.excepsion.SuperArrayNullPointerException;
+import com.aleksey.super_array.service.SuperArrayService;
 
-public class SuperArrayServiceImpl implements SuperArrayService{
+public class SuperArrayServiceImpl implements SuperArrayService {
 
     private final int length;
     private final int[] array;
