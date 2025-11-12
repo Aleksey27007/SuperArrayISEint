@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class SuperArray {
 
     private static final long MAX_LENGTH = 987654321098765432L;
-    private int[] array;
+    private final int[] array;
 
     private SuperArray(SuperArrayBuilder superArrayBuilder) {
         array = superArrayBuilder.array;
