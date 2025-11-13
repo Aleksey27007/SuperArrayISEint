@@ -87,6 +87,16 @@ public class SortingSuperArrayServiceImpl implements SortingSuperArrayService {
 
     @Override
     public int[] insertionSort(int[] array) { // O(n^2)
-        return new int[0];
+        int n = array.length;
+        for (int i = 1; i < n; i++) {
+            int key = array[i];
+            int j = i - 1;
+            while (j >= 0 && array[j] > key) {
+                array[j + 1] = array[j];
+                j = j - 1;
+            }
+            array[j + 1] = key;
+        }
+        return array;
     }
 }
