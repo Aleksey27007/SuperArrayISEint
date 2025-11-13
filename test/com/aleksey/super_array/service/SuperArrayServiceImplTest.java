@@ -1,8 +1,7 @@
-package java.com.aleksey.super_array.service;
+package com.aleksey.super_array.service;
 
 import com.aleksey.super_array.entity.SuperArray;
-import com.aleksey.super_array.excepsion.SuperArrayIndexOutOfBoundsException;
-import com.aleksey.super_array.excepsion.SuperArrayNullPointerException;
+import com.aleksey.super_array.excepsion.CustomArrayException;
 import com.aleksey.super_array.service.SuperArrayService;
 import com.aleksey.super_array.service.impl.SuperArrayServiceImpl;
 import org.apache.logging.log4j.LogManager;
@@ -60,21 +59,21 @@ class SuperArrayServiceImplTest {
 
 
     @BeforeEach
-    public void init(TestInfo testInfo) {
+    public void init(TestInfo testInfo) throws CustomArrayException {
         LOGGER.info("TEST START: {}", testInfo.getDisplayName());
 
         superArray = SuperArray.builder(1, -5, 12, 3, -4, 0, 7).build();
-        superArrayNull = SuperArray.builder().build();
 
         service = new SuperArrayServiceImpl();
         array = superArray.getArray();
     }
 
     @Test
-    void shouldThrowException() {
+    void shouldThrowException() throws CustomArrayException {
+
         Throwable thrown = assertThrows(
-                SuperArrayNullPointerException.class,
-                () -> serviceForNull = new SuperArrayServiceImpl()
+                CustomArrayException.class,
+                () -> superArrayNull = SuperArray.builder().build()
         );
 
         assertEquals("The array cannot be empty.", thrown.getMessage());
@@ -93,14 +92,14 @@ class SuperArrayServiceImplTest {
     }
 
     @Test
-    void shouldReplaceElementOfArray() {
+    void shouldReplaceElementOfArray() throws CustomArrayException {
         int[] initialArray = Arrays.copyOf(superArray.getArray(), superArray.getArray().length);
         int[] expectedArray = {1, -5, 12, 3, -4, 4, 7};
         service.replaceElementOfArray(array, 5, 4);
         int[] actualArray = superArray.getArray();
 
         Throwable thrown = assertThrows(
-                SuperArrayIndexOutOfBoundsException.class,
+                CustomArrayException.class,
                 () -> {
                     service.replaceElementOfArray(array, exceptionIndex, 2000);
                 }

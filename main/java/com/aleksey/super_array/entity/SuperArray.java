@@ -1,5 +1,7 @@
 package com.aleksey.super_array.entity;
 
+import com.aleksey.super_array.excepsion.CustomArrayException;
+
 import java.util.Arrays;
 
 public class SuperArray {
@@ -11,14 +13,17 @@ public class SuperArray {
         array = superArrayBuilder.array;
     }
 
-    public static SuperArrayBuilder builder(int... array) {
+    public static SuperArrayBuilder builder(int... array) throws CustomArrayException {
         return new SuperArrayBuilder(array);
     }
 
     public static class SuperArrayBuilder {
         private final int[] array;
 
-        public SuperArrayBuilder(int[] array) {
+        public SuperArrayBuilder(int[] array) throws CustomArrayException {
+            if (array.length < 1) {
+                throw new CustomArrayException("The array cannot be empty.");
+            }
             this.array = array;
         }
 

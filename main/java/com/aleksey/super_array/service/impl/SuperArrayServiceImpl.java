@@ -1,6 +1,6 @@
 package com.aleksey.super_array.service.impl;
 
-import com.aleksey.super_array.excepsion.SuperArrayIndexOutOfBoundsException;
+import com.aleksey.super_array.excepsion.CustomArrayException;
 import com.aleksey.super_array.service.SuperArrayService;
 
 public class SuperArrayServiceImpl implements SuperArrayService {
@@ -27,7 +27,7 @@ public class SuperArrayServiceImpl implements SuperArrayService {
     }
 
     @Override
-    public boolean replaceElementOfArray(int[] array, int index, int element) {
+    public boolean replaceElementOfArray(int[] array, int index, int element) throws CustomArrayException {
         validateIndex(array, index);
         array[index] = element;
         return true;
@@ -69,9 +69,9 @@ public class SuperArrayServiceImpl implements SuperArrayService {
         return count;
     }
 
-    private void validateIndex(int[] array, int index) {
+    private void validateIndex(int[] array, int index) throws CustomArrayException {
         if (index < 0 || index >= array.length) {
-            throw new SuperArrayIndexOutOfBoundsException(
+            throw new CustomArrayException(
                     String.format("Index %d is out of bounds. Array length: %d", index, array.length)
             );
         }
