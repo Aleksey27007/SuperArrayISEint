@@ -55,6 +55,7 @@ class SuperArrayServiceImplTest {
     private int positive = 4;
     private int negative = 2;
     private int exceptionIndex = 15;
+    private int[] array;
 
 
 
@@ -65,14 +66,15 @@ class SuperArrayServiceImplTest {
         superArray = SuperArray.builder(1, -5, 12, 3, -4, 0, 7).build();
         superArrayNull = SuperArray.builder().build();
 
-        service = new SuperArrayServiceImpl(superArray);
+        service = new SuperArrayServiceImpl();
+        array = superArray.getArray();
     }
 
     @Test
     void shouldThrowException() {
         Throwable thrown = assertThrows(
                 SuperArrayNullPointerException.class,
-                () -> serviceForNull = new SuperArrayServiceImpl(superArrayNull)
+                () -> serviceForNull = new SuperArrayServiceImpl()
         );
 
         assertEquals("The array cannot be empty.", thrown.getMessage());
@@ -80,13 +82,13 @@ class SuperArrayServiceImplTest {
 
     @Test
     void shouldFindMin() {
-        int actual = service.findMin();
+        int actual = service.findMin(array);
         assertEquals(min, actual);
     }
 
     @Test
     void shouldFindMax() {
-        int actual = service.findMax();
+        int actual = service.findMax(array);
         assertEquals(max, actual);
     }
 
@@ -94,13 +96,13 @@ class SuperArrayServiceImplTest {
     void shouldReplaceElementOfArray() {
         int[] initialArray = Arrays.copyOf(superArray.getArray(), superArray.getArray().length);
         int[] expectedArray = {1, -5, 12, 3, -4, 4, 7};
-        service.replaceElementOfArray(5, 4);
+        service.replaceElementOfArray(array, 5, 4);
         int[] actualArray = superArray.getArray();
 
         Throwable thrown = assertThrows(
                 SuperArrayIndexOutOfBoundsException.class,
                 () -> {
-                    service.replaceElementOfArray(exceptionIndex, 2000);
+                    service.replaceElementOfArray(array, exceptionIndex, 2000);
                 }
         );
 
@@ -112,25 +114,25 @@ class SuperArrayServiceImplTest {
 
     @Test
     void shouldCountAvgNumberOfArray() {
-        int actualAvgNum = service.avgNumberOfArray();
+        int actualAvgNum = service.avgNumberOfArray(array);
         assertEquals(avgNum, actualAvgNum);
     }
 
     @Test
     void shouldCountSumOfArrayElements() {
-        int actualSum = service.sumOfArrayElements();
+        int actualSum = service.sumOfArrayElements(array);
         assertEquals(sum, actualSum);
     }
 
     @Test
     void shouldCountNumberOfPositiveElements() {
-        int actualCount = service.numberOfPositiveElements();
+        int actualCount = service.numberOfPositiveElements(array);
         assertEquals(positive, actualCount);
     }
 
     @Test
     void numberOfNegativeElements() {
-        int actualCount = service.numberOfNegativeElements();
+        int actualCount = service.numberOfNegativeElements(array);
         assertEquals(negative, actualCount);
     }
 }

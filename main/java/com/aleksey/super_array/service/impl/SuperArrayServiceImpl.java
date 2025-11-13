@@ -1,28 +1,13 @@
 package com.aleksey.super_array.service.impl;
 
-import com.aleksey.super_array.entity.SuperArray;
 import com.aleksey.super_array.excepsion.SuperArrayIndexOutOfBoundsException;
-import com.aleksey.super_array.excepsion.SuperArrayNullPointerException;
 import com.aleksey.super_array.service.SuperArrayService;
 
 public class SuperArrayServiceImpl implements SuperArrayService {
-
-    private final int length;
-    private final int[] array;
-
-    public SuperArrayServiceImpl(SuperArray superArray) {
-        if (superArray.getArray().length == 0) {
-            throw new SuperArrayNullPointerException("The array cannot be empty.");
-        }
-        this.length = superArray.getArray().length;
-        this.array = superArray.getArray();
-    }
-
-
     @Override
-    public int findMin() {
+    public int findMin(int[] array) {
         int min = array[0];
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < array.length; i++) {
             if (array[i] < min) {
                 min = array[i];
             }
@@ -31,9 +16,9 @@ public class SuperArrayServiceImpl implements SuperArrayService {
     }
 
     @Override
-    public int findMax() {
+    public int findMax(int[] array) {
         int max = array[0];
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < array.length; i++) {
             if (array[i] > max) {
                 max = array[i];
             }
@@ -42,30 +27,30 @@ public class SuperArrayServiceImpl implements SuperArrayService {
     }
 
     @Override
-    public boolean replaceElementOfArray(int index, int element) {
-        validateIndex(index);
+    public boolean replaceElementOfArray(int[] array, int index, int element) {
+        validateIndex(array, index);
         array[index] = element;
         return true;
     }
 
     @Override
-    public int avgNumberOfArray() {
-        return sumOfArrayElements() / length;
+    public int avgNumberOfArray(int[] array) {
+        return sumOfArrayElements(array) / array.length;
     }
 
     @Override
-    public int sumOfArrayElements() {
+    public int sumOfArrayElements(int[] array) {
         int sum = 0;
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < array.length; i++) {
             sum += array[i];
         }
         return sum;
     }
 
     @Override
-    public int numberOfPositiveElements() {
+    public int numberOfPositiveElements(int[] array) {
         int count = 0;
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < array.length; i++) {
             if (array[i] > 0) {
                 count++;
             }
@@ -74,9 +59,9 @@ public class SuperArrayServiceImpl implements SuperArrayService {
     }
 
     @Override
-    public int numberOfNegativeElements() {
+    public int numberOfNegativeElements(int[] array) {
         int count = 0;
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < array.length; i++) {
             if (array[i] < 0) {
                 count++;
             }
@@ -84,10 +69,10 @@ public class SuperArrayServiceImpl implements SuperArrayService {
         return count;
     }
 
-    private void validateIndex(int index) {
-        if (index < 0 || index >= length) {
+    private void validateIndex(int[] array, int index) {
+        if (index < 0 || index >= array.length) {
             throw new SuperArrayIndexOutOfBoundsException(
-                    String.format("Index %d is out of bounds. Array length: %d", index, length)
+                    String.format("Index %d is out of bounds. Array length: %d", index, array.length)
             );
         }
     }
