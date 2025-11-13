@@ -892,3 +892,19 @@ com.aleksey.super_array.excepsion.CustomArrayException: The array cannot be empt
 	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:35) ~[junit-rt.jar:?]
 	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:235) ~[junit-rt.jar:?]
 	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:54) ~[junit-rt.jar:?]
+2025-11-13 20:51:59.565 [main] INFO  com.aleksey.super_array.service.SuperArrayServiceImplTest - TEST START: shouldReplaceElementOfArray()
+2025-11-13 20:51:59.603 [main] INFO  com.aleksey.super_array.service.SuperArrayServiceImplTest - TEST PASSED: shouldReplaceElementOfArray()
+2025-11-13 20:51:59.610 [main] INFO  com.aleksey.super_array.service.SuperArrayServiceImplTest - TEST START: shouldFindMax()
+2025-11-13 20:51:59.611 [main] INFO  com.aleksey.super_array.service.SuperArrayServiceImplTest - TEST PASSED: shouldFindMax()
+2025-11-13 20:51:59.615 [main] INFO  com.aleksey.super_array.service.SuperArrayServiceImplTest - TEST START: shouldFindMin()
+2025-11-13 20:51:59.617 [main] INFO  com.aleksey.super_array.service.SuperArrayServiceImplTest - TEST PASSED: shouldFindMin()
+2025-11-13 20:51:59.621 [main] INFO  com.aleksey.super_array.service.SuperArrayServiceImplTest - TEST START: shouldCountSumOfArrayElements()
+2025-11-13 20:51:59.623 [main] INFO  com.aleksey.super_array.service.SuperArrayServiceImplTest - TEST PASSED: shouldCountSumOfArrayElements()
+2025-11-13 20:51:59.625 [main] INFO  com.aleksey.super_array.service.SuperArrayServiceImplTest - TEST START: shouldCountNumberOfPositiveElements()
+2025-11-13 20:51:59.626 [main] INFO  com.aleksey.super_array.service.SuperArrayServiceImplTest - TEST PASSED: shouldCountNumberOfPositiveElements()
+2025-11-13 20:51:59.628 [main] INFO  com.aleksey.super_array.service.SuperArrayServiceImplTest - TEST START: shouldCountAvgNumberOfArray()
+2025-11-13 20:51:59.630 [main] INFO  com.aleksey.super_array.service.SuperArrayServiceImplTest - TEST PASSED: shouldCountAvgNumberOfArray()
+2025-11-13 20:51:59.634 [main] INFO  com.aleksey.super_array.service.SuperArrayServiceImplTest - TEST START: numberOfNegativeElements()
+2025-11-13 20:51:59.636 [main] INFO  com.aleksey.super_array.service.SuperArrayServiceImplTest - TEST PASSED: numberOfNegativeElements()
+2025-11-13 20:51:59.640 [main] INFO  com.aleksey.super_array.service.SuperArrayServiceImplTest - TEST START: shouldThrowException()
+2025-11-13 20:51:59.642 [main] INFO  com.aleksey.super_array.service.SuperArrayServiceImplTest - TEST PASSED: shouldThrowException()
