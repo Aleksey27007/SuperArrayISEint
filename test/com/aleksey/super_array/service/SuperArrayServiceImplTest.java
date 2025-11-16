@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class SuperArrayServiceImplTest {
 
     static {
-        System.setProperty("log4j.configurationFile", "D:\\IntJava\\innowise\\super_array\\main\\resources\\log4j2.xml");
+        System.setProperty("log4j.configurationFile", "D:\\IntJava\\innowise\\super_array\\main\\resources\\log\\log4j2.xml");
     }
 
     private static final Logger LOGGER = LogManager.getLogger();
