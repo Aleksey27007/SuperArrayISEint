@@ -5,7 +5,6 @@ public class StringValidator {
     private static final String GOOD_LINE_REGEX = "(\\d+[; .-]*)+";
 
     public boolean isTheLineSuitable(String line) {
-        System.out.println(line.matches(GOOD_LINE_REGEX));
         return line.matches(GOOD_LINE_REGEX);
     }
 }
