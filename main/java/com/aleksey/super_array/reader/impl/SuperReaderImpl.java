@@ -1,36 +1,51 @@
 package com.aleksey.super_array.reader.impl;
 
+import com.aleksey.super_array.excepsion.CustomArrayException;
 import com.aleksey.super_array.reader.SuperReader;
 import com.aleksey.super_array.validator.StringValidator;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Optional;
 
 public class SuperReaderImpl implements SuperReader {
+    private final Path baseDirectory;
+    private final StringValidator stringValidator;
 
-    private static final String PATH = "D:\\IntJava\\innowise\\super_array\\main\\resources\\file";
-    private static final StringValidator stringValidator = new StringValidator();
+    public SuperReaderImpl(Path baseDirectory, StringValidator stringValidator) throws CustomArrayException {
+        if (baseDirectory == null) {
+            throw new CustomArrayException("baseDirectory must not be null");
+        }
+        if (stringValidator == null) {
+            throw new IllegalArgumentException("stringValidator must not be null");
+        }
+        this.baseDirectory = baseDirectory;
+        this.stringValidator = stringValidator;
+    }
 
     @Override
     public ArrayList<String> superRead(String fileName) {
-        String absolutePath = PATH + "\\" + fileName;
-        ArrayList<String> list = new ArrayList<>();
+        if (fileName == null || fileName.isBlank()) {
+            throw new IllegalArgumentException("fileName must not be null or blank");
+        }
 
-        try(BufferedReader reader = new BufferedReader(new FileReader(absolutePath))) {
+        ArrayList<String> list = new ArrayList<>();
+        Path absolutePath = baseDirectory.resolve(fileName);
+
+        try (BufferedReader reader = Files.newBufferedReader(absolutePath)) {
             String line;
             while ((line = reader.readLine()) != null) {
                 if(stringValidator.isTheLineSuitable(line)) {
                     list.add(line);
                 }
             }
-            return list;
+        } catch (IOException e) {
+            throw new IllegalStateException("Unable to read file: " + absolutePath, e);
         }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+
         return list;
     }
 }
