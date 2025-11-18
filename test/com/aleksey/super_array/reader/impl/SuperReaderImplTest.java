@@ -1,13 +1,15 @@
 package com.aleksey.super_array.reader.impl;
 
 import com.aleksey.super_array.excepsion.CustomArrayException;
-import com.aleksey.super_array.validator.StringValidator;
+import com.aleksey.super_array.validator.impl.StringValidatorImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,21 +30,21 @@ class SuperReaderImplTest {
                 "11; 2"
         ));
 
-        SuperReaderImpl reader = new SuperReaderImpl(tempDirectory, new StringValidator());
+        SuperReaderImpl reader = new SuperReaderImpl(tempDirectory, new StringValidatorImpl());
 
-        assertEquals(List.of("1; 2; 3", "1; 2; x3; 6..5; 77 "), reader.superRead("numbers.txt"));
+        assertEquals(new ArrayList<>(Arrays.asList("1; 2; 3", "11; 2")), reader.superRead("numbers.txt"));
     }
 
     @Test
     void superReadThrowsIfFileMissing() throws CustomArrayException {
-        SuperReaderImpl reader = new SuperReaderImpl(tempDirectory, new StringValidator());
+        SuperReaderImpl reader = new SuperReaderImpl(tempDirectory, new StringValidatorImpl());
 
         assertThrows(IllegalStateException.class, () -> reader.superRead("missing.txt"));
     }
 
     @Test
     void superReadRejectsBlankFileName() throws CustomArrayException {
-        SuperReaderImpl reader = new SuperReaderImpl(tempDirectory, new StringValidator());
+        SuperReaderImpl reader = new SuperReaderImpl(tempDirectory, new StringValidatorImpl());
 
         assertThrows(IllegalArgumentException.class, () -> reader.superRead("  "));
     }
