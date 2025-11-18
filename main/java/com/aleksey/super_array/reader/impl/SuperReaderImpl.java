@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SuperReaderImpl implements SuperReader {
     private final Path baseDirectory;
@@ -27,12 +28,12 @@ public class SuperReaderImpl implements SuperReader {
     }
 
     @Override
-    public ArrayList<String> superRead(String fileName) {
+    public List<String> superRead(String fileName) {
         if (fileName == null || fileName.isBlank()) {
             throw new IllegalArgumentException("fileName must not be null or blank");
         }
 
-        ArrayList<String> list = new ArrayList<>();
+        List<String> list = new ArrayList<>();
         Path absolutePath = baseDirectory.resolve(fileName);
 
         try (BufferedReader reader = Files.newBufferedReader(absolutePath)) {

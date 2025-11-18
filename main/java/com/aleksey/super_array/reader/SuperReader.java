@@ -1,8 +1,7 @@
 package com.aleksey.super_array.reader;
 
-import java.util.ArrayList;
-import java.util.Optional;
+import java.util.List;
 
 public interface SuperReader {
-    ArrayList<String> superRead(String fileName);
+    List<String> superRead(String fileName);
 }
