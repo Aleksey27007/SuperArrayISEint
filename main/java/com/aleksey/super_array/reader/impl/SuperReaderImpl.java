@@ -2,26 +2,25 @@ package com.aleksey.super_array.reader.impl;
 
 import com.aleksey.super_array.excepsion.CustomArrayException;
 import com.aleksey.super_array.reader.SuperReader;
-import com.aleksey.super_array.validator.StringValidator;
+import com.aleksey.super_array.validator.impl.StringValidatorImpl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SuperReaderImpl implements SuperReader {
     private final Path baseDirectory;
-    private final StringValidator stringValidator;
+    private final StringValidatorImpl stringValidator;
 
-    public SuperReaderImpl(Path baseDirectory, StringValidator stringValidator) throws CustomArrayException {
+    public SuperReaderImpl(Path baseDirectory, StringValidatorImpl stringValidator) throws CustomArrayException {
         if (baseDirectory == null) {
             throw new CustomArrayException("baseDirectory must not be null");
         }
         if (stringValidator == null) {
-            throw new IllegalArgumentException("stringValidator must not be null");
+            throw new CustomArrayException("stringValidator must not be null");
         }
         this.baseDirectory = baseDirectory;
         this.stringValidator = stringValidator;
