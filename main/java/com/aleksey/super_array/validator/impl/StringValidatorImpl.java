@@ -1,7 +1,7 @@
-package com.aleksey.super_array.validator;
+package com.aleksey.super_array.validator.impl;
 
 
-public class StringValidator {
+public class StringValidatorImpl {
     private static final String GOOD_LINE_REGEX = "(\\d+[; .-]*)+";
 
     public boolean isTheLineSuitable(String line) {
