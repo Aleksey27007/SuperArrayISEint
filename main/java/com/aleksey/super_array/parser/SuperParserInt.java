@@ -1,7 +1,7 @@
 package com.aleksey.super_array.parser;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface SuperParserInt {
-    int[] parse(ArrayList<String> stringArray);
+    int[] parse(List<String> stringArray);
 }

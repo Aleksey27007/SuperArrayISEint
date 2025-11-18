@@ -2,14 +2,14 @@ package com.aleksey.super_array.parser.impl;
 
 import com.aleksey.super_array.parser.SuperParserInt;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class SuperParserIntImpl implements SuperParserInt {
     private static final String REGEX = "\\s*[;,.]\\s*";
     private int elementCounter = 0;
 
     @Override
-    public int[] parse(ArrayList<String> array) {
+    public int[] parse(List<String> array) {
         int[] temp;
         int[] result = new int[getElementCounter(array)];
         int position = 0;
@@ -31,7 +31,7 @@ public class SuperParserIntImpl implements SuperParserInt {
         return result;
     }
 
-    private int getElementCounter(ArrayList<String> array) {
+    private int getElementCounter(List<String> array) {
         for (int i = 0; i < array.size(); i++) {
             elementCounter += array.get(i).split(REGEX).length;
         }
