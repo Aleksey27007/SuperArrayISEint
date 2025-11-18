@@ -8,7 +8,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
 
 import java.util.Arrays;
 
@@ -17,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SuperArrayServiceImplTest {
 
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
 
     private SuperArray superArray;
     private SuperArray superArrayNull;
@@ -34,9 +33,7 @@ class SuperArrayServiceImplTest {
 
 
     @BeforeEach
-    public void init(TestInfo testInfo) throws CustomArrayException {
-        LOGGER.info("TEST START: {}", testInfo.getDisplayName());
-
+    public void init() throws CustomArrayException {
         superArray = SuperArray.builder(1, -5, 12, 3, -4, 0, 7).build();
 
         service = new SuperArrayServiceImpl();
