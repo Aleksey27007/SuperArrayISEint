@@ -3,6 +3,9 @@ package com.aleksey.super_array.reader.impl;
 import com.aleksey.super_array.excepsion.CustomArrayException;
 import com.aleksey.super_array.reader.SuperReader;
 import com.aleksey.super_array.validator.impl.StringValidatorImpl;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,6 +17,7 @@ import java.util.List;
 public class SuperReaderImpl implements SuperReader {
     private final Path baseDirectory;
     private final StringValidatorImpl stringValidator;
+    private static final Logger logger = LogManager.getLogger();
 
     public SuperReaderImpl(Path baseDirectory, StringValidatorImpl stringValidator) throws CustomArrayException {
         if (baseDirectory == null) {
@@ -27,9 +31,10 @@ public class SuperReaderImpl implements SuperReader {
     }
 
     @Override
-    public List<String> superRead(String fileName) {
+    public List<String> superRead(String fileName) throws CustomArrayException {
         if (fileName == null || fileName.isBlank()) {
-            throw new IllegalArgumentException("fileName must not be null or blank");
+            logger.log(Level.ERROR, "fileName must not be null or blank " + SuperReaderImpl.class.getName());
+            throw new CustomArrayException("fileName must not be null or blank");
         }
 
         List<String> list = new ArrayList<>();
@@ -43,7 +48,8 @@ public class SuperReaderImpl implements SuperReader {
                 }
             }
         } catch (IOException e) {
-            throw new IllegalStateException("Unable to read file: " + absolutePath, e);
+            logger.log(Level.ERROR, "Unable to read file: " + absolutePath + e + SuperReaderImpl.class.getName());
+            throw new CustomArrayException("Unable to read file: " + absolutePath, e);
         }
 
         return list;
