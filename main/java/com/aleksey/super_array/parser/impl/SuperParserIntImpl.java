@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 public class SuperParserIntImpl implements SuperParserInt {
-    private static final String REGEX = "\\s*[;,.]\\s*";
+    private static final String REGEX = "\\s*[; ,.]\\s*";
     private int elementCounter = 0;
     private static final Logger logger = LogManager.getLogger();
 
@@ -18,16 +18,18 @@ public class SuperParserIntImpl implements SuperParserInt {
         int[] result = new int[getElementCounter(array)];
         int position = 0;
         for (int i = 0; i < array.size(); i++) {
-            temp = parseLine(array.get(i));
-            System.arraycopy(temp, 0, result, position, temp.length);
-            position += temp.length;
+            if (!array.get(i).isBlank()) {
+                temp = parseLine(array.get(i));
+                System.arraycopy(temp, 0, result, position, temp.length);
+                position += temp.length;
+            }
         }
         logger.log(Level.INFO, "Parser worked.");
         return result;
     }
 
     private int[] parseLine(String line) {
-        String [] substring = line.split(REGEX);
+        String[] substring = line.split(REGEX);
         int[] result = new int[substring.length];
 
         for (int i = 0; i < result.length; i++) {
