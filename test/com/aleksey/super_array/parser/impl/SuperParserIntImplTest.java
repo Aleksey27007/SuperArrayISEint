@@ -2,6 +2,7 @@ package com.aleksey.super_array.parser.impl;
 
 import com.aleksey.super_array.excepsion.CustomArrayException;
 import com.aleksey.super_array.reader.impl.SuperReaderImpl;
+import com.aleksey.super_array.resources.string_lists_enum.StringsToTest;
 import com.aleksey.super_array.validator.impl.StringValidatorImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -24,12 +25,7 @@ class SuperParserIntImplTest {
     void parseFileNumbers() throws CustomArrayException {
         Path file = tempDirectory.resolve("fileNumbers");
         try {
-            Files.write(file, List.of(
-                    "1; 2; 3;",
-                    "1; 2; x3; 6..5; 77",
-                    "",
-                    "11; 2"
-            ));
+            Files.write(file, StringsToTest.STRING_TO_TEST.getStringList());
         } catch (IOException e) {
             throw new CustomArrayException(e.getMessage());
         }
