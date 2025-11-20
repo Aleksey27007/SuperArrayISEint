@@ -1,11 +1,9 @@
-package com.aleksey.super_array.service;
+package com.aleksey.super_array.service.impl;
 
 import com.aleksey.super_array.entity.SuperArray;
 import com.aleksey.super_array.excepsion.CustomArrayException;
 
-import com.aleksey.super_array.service.impl.SuperArrayServiceImpl;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.aleksey.super_array.service.SuperArrayService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
