@@ -2,8 +2,13 @@ package com.aleksey.super_array.service.impl;
 
 import com.aleksey.super_array.excepsion.CustomArrayException;
 import com.aleksey.super_array.service.SuperArrayService;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 public class SuperArrayServiceImpl implements SuperArrayService {
+    private static final Logger logger = LogManager.getLogger();
     @Override
     public int findMin(int[] array) {
         int min = array[0];
@@ -71,6 +76,7 @@ public class SuperArrayServiceImpl implements SuperArrayService {
 
     private void validateIndex(int[] array, int index) throws CustomArrayException {
         if (index < 0 || index >= array.length) {
+            logger.log(Level.INFO, "Index out of bounds. Method validateIndex, SuperArrayServiceIml.class");
             throw new CustomArrayException(
                     String.format("Index %d is out of bounds. Array length: %d", index, array.length)
             );
