@@ -16,8 +16,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SuperArrayServiceImplTest {
 
-    private static final Logger logger = LogManager.getLogger();
-
     private SuperArray superArray;
     private SuperArray superArrayNull;
 
