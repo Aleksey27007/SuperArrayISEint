@@ -22,6 +22,7 @@ class SuperReaderImplTest {
     Path tempDirectory;
 
     private List<String> actualList = Arrays.asList("1; 2; 3", "10; 5;; 4",
+            "11; 2; 3 ;4,", "1, 2, 3 , 12, 5, 7; 10",
             "1;3;3;4;1;6", "13;5; 6; 1; 14. 8", "11; 2; 1 ; 6; 1; 2; 9", "1; 2; 3",
             "11; 2", "1; 2; 3", "11; 2");
 
@@ -40,13 +41,13 @@ class SuperReaderImplTest {
     void superReadThrowsIfFileMissing() throws CustomArrayException {
         SuperReaderImpl reader = new SuperReaderImpl(tempDirectory, new StringValidatorImpl());
 
-        assertThrows(IllegalStateException.class, () -> reader.superRead("missing.txt"));
+        assertThrows(CustomArrayException.class, () -> reader.superRead("missing.txt"));
     }
 
     @Test
     void superReadRejectsBlankFileName() throws CustomArrayException {
         SuperReaderImpl reader = new SuperReaderImpl(tempDirectory, new StringValidatorImpl());
 
-        assertThrows(IllegalArgumentException.class, () -> reader.superRead("  "));
+        assertThrows(CustomArrayException.class, () -> reader.superRead("  "));
     }
 }
