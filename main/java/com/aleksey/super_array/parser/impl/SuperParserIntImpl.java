@@ -1,12 +1,16 @@
 package com.aleksey.super_array.parser.impl;
 
 import com.aleksey.super_array.parser.SuperParserInt;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class SuperParserIntImpl implements SuperParserInt {
     private static final String REGEX = "\\s*[;,.]\\s*";
     private int elementCounter = 0;
+    private static final Logger logger = LogManager.getLogger();
 
     @Override
     public int[] parse(List<String> array) {
@@ -18,6 +22,7 @@ public class SuperParserIntImpl implements SuperParserInt {
             System.arraycopy(temp, 0, result, position, temp.length);
             position += temp.length;
         }
+        logger.log(Level.INFO, "Parser worked.");
         return result;
     }
 

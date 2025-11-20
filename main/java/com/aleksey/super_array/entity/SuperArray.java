@@ -4,10 +4,15 @@ import com.aleksey.super_array.excepsion.CustomArrayException;
 
 import java.util.Arrays;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class SuperArray {
 
     private static final long MAX_LENGTH = 987654321098765432L;
     private final int[] array;
+    private static final Logger logger = LogManager.getLogger();
 
     private SuperArray(SuperArrayBuilder superArrayBuilder) {
         array = superArrayBuilder.array;
@@ -28,6 +33,7 @@ public class SuperArray {
         }
 
         public SuperArray build() {
+            logger.log(Level.INFO, "New SuperArray created.");
             return new SuperArray(this);
         }
     }
@@ -39,9 +45,7 @@ public class SuperArray {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof SuperArray)) return false;
-
-        SuperArray that = (SuperArray) o;
+        if (!(o instanceof SuperArray that)) return false;
 
         return Arrays.equals(getArray(), that.getArray());
     }

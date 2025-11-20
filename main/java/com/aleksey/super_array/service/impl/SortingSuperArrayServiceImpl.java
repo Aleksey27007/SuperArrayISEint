@@ -1,11 +1,18 @@
 package com.aleksey.super_array.service.impl;
 
 import com.aleksey.super_array.service.SortingSuperArrayService;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class SortingSuperArrayServiceImpl implements SortingSuperArrayService {
+
+    private static final Logger logger = LogManager.getLogger();
+
     @Override
     public int[] quickSort(int[] array) { // O(n log n) - в среднем, O(n^2) - в худшем
         quickSort(array, 0, array.length - 1);
+        logger.log(Level.INFO, "quickSort");
         return array;
     }
 
@@ -47,6 +54,7 @@ public class SortingSuperArrayServiceImpl implements SortingSuperArrayService {
 
             merge(array, left, middle, right);
         }
+        logger.log(Level.INFO, "mergeSort");
         return array;
     }
 
@@ -97,6 +105,7 @@ public class SortingSuperArrayServiceImpl implements SortingSuperArrayService {
             }
             array[j + 1] = key;
         }
+        logger.log(Level.INFO, "insertionSort");
         return array;
     }
 }
