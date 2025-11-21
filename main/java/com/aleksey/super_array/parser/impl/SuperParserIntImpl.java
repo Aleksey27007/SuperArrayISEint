@@ -5,23 +5,20 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SuperParserIntImpl implements SuperParserInt {
-    private static final String REGEX = "\\s*[; ,.]\\s*";
-    private int elementCounter = 0;
+    private static final String NUMBER_SEPARATOR_PATTERN = "\\s*[; ,.]\\s*";
     private static final Logger logger = LogManager.getLogger();
 
     @Override
-    public int[] parse(List<String> array) {
-        int[] temp;
-        int[] result = new int[getElementCounter(array)];
-        int position = 0;
+    public List<int[]> parse(List<String> array) {
+        List<int[]> result = new ArrayList<>();
         for (int i = 0; i < array.size(); i++) {
             if (!array.get(i).isBlank()) {
-                temp = parseLine(array.get(i));
-                System.arraycopy(temp, 0, result, position, temp.length);
-                position += temp.length;
+                int[] parsedLine = parseLine(array.get(i));
+                result.add(parsedLine);
             }
         }
         logger.log(Level.INFO, "Parser worked.");
@@ -29,19 +26,12 @@ public class SuperParserIntImpl implements SuperParserInt {
     }
 
     private int[] parseLine(String line) {
-        String[] substring = line.split(REGEX);
+        String[] substring = line.split(NUMBER_SEPARATOR_PATTERN);
         int[] result = new int[substring.length];
 
         for (int i = 0; i < result.length; i++) {
             result[i] = Integer.parseInt(substring[i]);
         }
         return result;
-    }
-
-    private int getElementCounter(List<String> array) {
-        for (int i = 0; i < array.size(); i++) {
-            elementCounter += array.get(i).split(REGEX).length;
-        }
-        return elementCounter;
     }
 }
