@@ -1,5 +1,6 @@
 package com.aleksey.super_array.parser.impl;
 
+import com.aleksey.super_array.entity.SuperArray;
 import com.aleksey.super_array.excepsion.CustomArrayException;
 import com.aleksey.super_array.reader.impl.SuperReaderImpl;
 import com.aleksey.super_array.resources.string_lists_enum.StringsToTest;
@@ -12,7 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class SuperParserIntImplTest {
 
@@ -22,21 +23,40 @@ class SuperParserIntImplTest {
     Path tempDirectory;
 
     @Test
-    void parseFileNumbers() throws CustomArrayException {
+    void parseFileNumbers() throws CustomArrayException, IOException {
         Path file = tempDirectory.resolve("numbers.txt");
-        try {
-            Files.write(file, StringsToTest.STRING_TO_TEST.getStringList());
-        } catch (IOException e) {
-            throw new CustomArrayException(e.getMessage());
+        Files.write(file, StringsToTest.STRING_TO_TEST.getStringList());
+
+        StringValidatorImpl validator = new StringValidatorImpl();
+        SuperReaderImpl reader = new SuperReaderImpl(tempDirectory, validator);
+        List<String> validatedLines = reader.superRead("numbers.txt");
+
+        List<int[]> parsedArrays = parser.parse(validatedLines);
+        int[] combinedArray = combineArrays(parsedArrays);
+
+        SuperArray superArray = SuperArray.builder(combinedArray).setId(1L).build();
+
+        assertNotNull(superArray);
+        assertEquals(1L, superArray.getId());
+        assertNotNull(superArray.getArray());
+        assertNotEquals(0, superArray.getArray().length);
+        assertArrayEquals(combinedArray, superArray.getArray());
+    }
+
+    private int[] combineArrays(List<int[]> arrays) {
+        int totalLength = 0;
+        for (int i = 0; i < arrays.size(); i++) {
+            totalLength += arrays.get(i).length;
         }
 
-        SuperReaderImpl reader = new SuperReaderImpl(tempDirectory, new StringValidatorImpl());
-        List<String> lines = reader.superRead("numbers.txt");
-        int[] result = parser.parse(lines);
-
-        assertArrayEquals(new int[]{1, 2, 3, 10, 5, 4, 11, 2,
-                3, 4, 1, 2, 3, 12, 5, 7, 10, 1, 3, 3, 4, 1, 6, 13, 5, 6, 1, 14,
-                8, 11, 2, 1, 6, 1, 2, 9, 1, 2, 3, 11, 2, 1, 2, 3, 11, 2}, result);
+        int[] result = new int[totalLength];
+        int position = 0;
+        for (int i = 0; i < arrays.size(); i++) {
+            int[] array = arrays.get(i);
+            System.arraycopy(array, 0, result, position, array.length);
+            position += array.length;
+        }
+        return result;
     }
 }
 

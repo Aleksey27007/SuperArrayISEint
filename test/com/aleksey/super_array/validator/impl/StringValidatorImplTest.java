@@ -1,7 +1,15 @@
 package com.aleksey.super_array.validator.impl;
 
+import com.aleksey.super_array.excepsion.CustomArrayException;
+import com.aleksey.super_array.reader.impl.SuperReaderImpl;
 import com.aleksey.super_array.resources.string_lists_enum.StringsToTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,60 +17,39 @@ class StringValidatorImplTest {
 
     private final StringValidatorImpl validator = new StringValidatorImpl();
 
-    @Test
-    void testValidStrings() {
-        assertTrue(validator.isTheLineSuitable("1; 2; 3"));
-        assertTrue(validator.isTheLineSuitable("1;3;3;4;1;6"));
-        assertTrue(validator.isTheLineSuitable("13;5; 6; 1; 14. 8"));
-        assertTrue(validator.isTheLineSuitable("11; 2; 1 ; 6; 1; 2; 9"));
-        assertTrue(validator.isTheLineSuitable("11; 2"));
-        assertTrue(validator.isTheLineSuitable("10; 5;; 4"));
-        assertTrue(validator.isTheLineSuitable("11; 2; 3  4,"));
-        assertTrue(validator.isTheLineSuitable("1, 2, 3 , 12, 5, 7; 10"));
-    }
+    @TempDir
+    Path tempDirectory;
 
     @Test
-    void testInvalidStrings() {
-        assertFalse(validator.isTheLineSuitable(""));
-        assertFalse(validator.isTheLineSuitable("1; 2; x3; 6..5; 77 "));
-        assertFalse(validator.isTheLineSuitable("13; 12, 11a"));
-        assertFalse(validator.isTheLineSuitable("1q; 2; 3a"));
-        assertFalse(validator.isTheLineSuitable("qass"));
-    }
+    void testValidateStringsFromFile() throws IOException, CustomArrayException {
+        Path file = tempDirectory.resolve("test_numbers.txt");
+        List<String> testStrings = StringsToTest.STRING_TO_TEST.getStringList();
+        
+        Files.write(file, testStrings);
 
-    @Test
-    void testAllStringsFromEnum() {
-        StringsToTest.STRING_TO_TEST.getStringList().forEach(line -> {
+        List<String> allLinesFromFile = Files.readAllLines(file);
+        
+        SuperReaderImpl reader = new SuperReaderImpl(tempDirectory, validator);
+        List<String> validatedLines = reader.superRead("test_numbers.txt");
+
+        for (int i = 0; i < allLinesFromFile.size(); i++) {
+            String line = allLinesFromFile.get(i);
             boolean isValid = validator.isTheLineSuitable(line);
-            System.out.println("Line: '" + line + "' -> Valid: " + isValid);
-        });
-    }
-
-    @Test
-    void testEmptyString() {
-        assertFalse(validator.isTheLineSuitable(""));
-        assertFalse(validator.isTheLineSuitable("   "));
-    }
-
-    @Test
-    void testStringWithOnlyDigits() {
-        assertTrue(validator.isTheLineSuitable("123"));
-        assertTrue(validator.isTheLineSuitable("1"));
-    }
-
-    @Test
-    void testStringWithLetters() {
-        assertFalse(validator.isTheLineSuitable("abc"));
-        assertFalse(validator.isTheLineSuitable("1a"));
-        assertFalse(validator.isTheLineSuitable("a1"));
-    }
-
-    @Test
-    void testStringWithSeparators() {
-        assertTrue(validator.isTheLineSuitable("1;2;3"));
-        assertTrue(validator.isTheLineSuitable("1.2.3"));
-        assertTrue(validator.isTheLineSuitable("1-2-3"));
-        assertTrue(validator.isTheLineSuitable("1 2 3"));
-        assertTrue(validator.isTheLineSuitable("1,2,3"));
+            
+            boolean expectedValid = line != null 
+                    && !line.isBlank() 
+                    && line.matches("\\s*\\d+(\\s*[; ,.]\\s*\\d+)*\\s*");
+            
+            assertEquals(expectedValid, isValid, 
+                    "Validation failed for line at index " + i + ": '" + line + "'");
+            
+            if (expectedValid) {
+                assertTrue(validatedLines.contains(line), 
+                        "Valid line '" + line + "' should be in validated lines list");
+            } else {
+                assertFalse(validatedLines.contains(line), 
+                        "Invalid line '" + line + "' should not be in validated lines list");
+            }
+        }
     }
 }

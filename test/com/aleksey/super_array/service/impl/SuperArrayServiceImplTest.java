@@ -30,7 +30,7 @@ class SuperArrayServiceImplTest {
 
     @BeforeEach
     public void init() throws CustomArrayException {
-        superArray = SuperArray.builder(1, -5, 12, 3, -4, 0, 7).build();
+        superArray = SuperArray.builder(1, -5, 12, 3, -4, 0, 7).setId(1L).build();
 
         service = new SuperArrayServiceImpl();
         array = superArray.getArray();

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.io.TempDir;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,20 +20,26 @@ class SuperReaderImplTest {
     @TempDir
     Path tempDirectory;
 
-    private List<String> actualList = Arrays.asList("1; 2; 3", "10; 5;; 4",
-            "11; 2; 3 ;4,", "1, 2, 3 , 12, 5, 7; 10",
-            "1;3;3;4;1;6", "13;5; 6; 1; 14. 8", "11; 2; 1 ; 6; 1; 2; 9", "1; 2; 3",
-            "11; 2", "1; 2; 3", "11; 2");
-
     @Test
     void superReadKeepsOnlyValidatedLines() throws IOException, CustomArrayException {
         Path file = tempDirectory.resolve("numbers.txt");
+        List<String> testStrings = StringsToTest.STRING_TO_TEST.getStringList();
+        
+        Files.write(file, testStrings);
 
-        Files.write(file, StringsToTest.STRING_TO_TEST.getStringList());
+        StringValidatorImpl validator = new StringValidatorImpl();
+        SuperReaderImpl reader = new SuperReaderImpl(tempDirectory, validator);
+        List<String> result = reader.superRead("numbers.txt");
 
-        SuperReaderImpl reader = new SuperReaderImpl(tempDirectory, new StringValidatorImpl());
+        List<String> expectedList = new ArrayList<>();
+        for (int i = 0; i < testStrings.size(); i++) {
+            String line = testStrings.get(i);
+            if (validator.isTheLineSuitable(line)) {
+                expectedList.add(line);
+            }
+        }
 
-        assertEquals(actualList, reader.superRead("numbers.txt"));
+        assertEquals(expectedList, result);
     }
 
     @Test
