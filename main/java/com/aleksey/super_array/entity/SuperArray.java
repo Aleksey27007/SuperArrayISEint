@@ -11,11 +11,13 @@ import org.apache.logging.log4j.Logger;
 public class SuperArray {
 
     private static final long MAX_LENGTH = 987654321098765432L;
+    private final long id;
     private final int[] array;
     private static final Logger logger = LogManager.getLogger();
 
     private SuperArray(SuperArrayBuilder superArrayBuilder) {
-        array = superArrayBuilder.array;
+        this.id = superArrayBuilder.id;
+        this.array = superArrayBuilder.array;
     }
 
     public static SuperArrayBuilder builder(int... array) throws CustomArrayException {
@@ -24,6 +26,7 @@ public class SuperArray {
 
     public static class SuperArrayBuilder {
         private final int[] array;
+        private long id;
 
         public SuperArrayBuilder(int[] array) throws CustomArrayException {
             if (array.length < 1) {
@@ -32,10 +35,19 @@ public class SuperArray {
             this.array = array;
         }
 
+        public SuperArrayBuilder setId(long id) {
+            this.id = id;
+            return this;
+        }
+
         public SuperArray build() {
             logger.log(Level.INFO, "New SuperArray created.");
             return new SuperArray(this);
         }
+    }
+
+    public long getId() {
+        return id;
     }
 
     public int[] getArray() {
