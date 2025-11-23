@@ -25,12 +25,14 @@ class SuperArrayServiceImplTest {
     private int positive = 4;
     private int negative = 2;
     private int exceptionIndex = 15;
+    private int[] initSuperArray = {1, -5, 12, 3, -4, 0, 7};
+    private int[] expectedArrayWithReplacedElement = {1, -5, 12, 3, -4, 4, 7};
     private int[] array;
 
 
     @BeforeEach
     public void init() throws CustomArrayException {
-        superArray = SuperArray.builder(1, -5, 12, 3, -4, 0, 7).setId(1L).build();
+        superArray = SuperArray.builder(initSuperArray).setId(1L).build();
 
         service = new SuperArrayServiceImpl();
         array = superArray.getArray();
@@ -59,7 +61,7 @@ class SuperArrayServiceImplTest {
     @Test
     void shouldReplaceElementOfArray() throws CustomArrayException {
         int[] initialArray = Arrays.copyOf(superArray.getArray(), superArray.getArray().length);
-        int[] expectedArray = {1, -5, 12, 3, -4, 4, 7};
+        int[] expectedArray = expectedArrayWithReplacedElement;
         service.replaceElementOfArray(array, 5, 4);
         int[] actualArray = superArray.getArray();
 
