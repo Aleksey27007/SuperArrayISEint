@@ -27,15 +27,11 @@ class SuperArrayServiceImplTest {
     private int exceptionIndex = 15;
     private int[] initSuperArray = {1, -5, 12, 3, -4, 0, 7};
     private int[] expectedArrayWithReplacedElement = {1, -5, 12, 3, -4, 4, 7};
-    private int[] array;
-
-
     @BeforeEach
     public void init() throws CustomArrayException {
         superArray = SuperArray.builder(initSuperArray).setId(1L).build();
 
         service = new SuperArrayServiceImpl();
-        array = superArray.getArray();
     }
 
     @Test
@@ -48,13 +44,13 @@ class SuperArrayServiceImplTest {
 
     @Test
     void shouldFindMin() {
-        int actual = service.findMin(array);
+        int actual = service.findMin(superArray);
         assertEquals(min, actual);
     }
 
     @Test
     void shouldFindMax() {
-        int actual = service.findMax(array);
+        int actual = service.findMax(superArray);
         assertEquals(max, actual);
     }
 
@@ -62,11 +58,11 @@ class SuperArrayServiceImplTest {
     void shouldReplaceElementOfArray() throws CustomArrayException {
         int[] initialArray = Arrays.copyOf(superArray.getArray(), superArray.getArray().length);
         int[] expectedArray = expectedArrayWithReplacedElement;
-        service.replaceElementOfArray(array, 5, 4);
+        service.replaceElementOfArray(superArray, 5, 4);
         int[] actualArray = superArray.getArray();
 
         Throwable thrown = assertThrows(CustomArrayException.class,
-                () -> service.replaceElementOfArray(array, exceptionIndex, 2000));
+                () -> service.replaceElementOfArray(superArray, exceptionIndex, 2000));
 
         assertEquals(String.format("Index %d is out of bounds. Array length: %d", exceptionIndex, superArray.getArray().length), thrown.getMessage());
 
@@ -76,25 +72,25 @@ class SuperArrayServiceImplTest {
 
     @Test
     void shouldCountAvgNumberOfArray() {
-        int actualAvgNum = service.avgNumberOfArray(array);
+        int actualAvgNum = service.avgNumberOfArray(superArray);
         assertEquals(avgNum, actualAvgNum);
     }
 
     @Test
     void shouldCountSumOfArrayElements() {
-        int actualSum = service.sumOfArrayElements(array);
+        int actualSum = service.sumOfArrayElements(superArray);
         assertEquals(sum, actualSum);
     }
 
     @Test
     void shouldCountNumberOfPositiveElements() {
-        int actualCount = service.numberOfPositiveElements(array);
+        int actualCount = service.numberOfPositiveElements(superArray);
         assertEquals(positive, actualCount);
     }
 
     @Test
     void numberOfNegativeElements() {
-        int actualCount = service.numberOfNegativeElements(array);
+        int actualCount = service.numberOfNegativeElements(superArray);
         assertEquals(negative, actualCount);
     }
 }
