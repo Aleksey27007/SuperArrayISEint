@@ -15,9 +15,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class StreamSuperReaderImpl implements SuperReader {
+    private static final Logger logger = LogManager.getLogger();
     private final Path baseDirectory;
     private final StringValidatorImpl stringValidator;
-    private static final Logger logger = LogManager.getLogger();
+
 
     public StreamSuperReaderImpl(Path baseDirectory, StringValidatorImpl stringValidator) throws CustomArrayException {
         if (baseDirectory == null) {
@@ -40,10 +41,9 @@ public class StreamSuperReaderImpl implements SuperReader {
         Path absolutePath = baseDirectory.resolve(fileName);
 
         try (Stream<String> lines = Files.lines(absolutePath)) {
-            List<String> result = lines
+            return lines
                     .filter(stringValidator::isTheLineSuitable)
                     .collect(Collectors.toList());
-            return result;
         } catch (IOException e) {
             logger.log(Level.ERROR, "Unable to read file: " + absolutePath + e + StreamSuperReaderImpl.class.getName());
             throw new CustomArrayException("Unable to read file: " + absolutePath, e);
