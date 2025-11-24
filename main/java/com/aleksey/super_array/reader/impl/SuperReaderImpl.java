@@ -15,9 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SuperReaderImpl implements SuperReader {
+    private static final Logger logger = LogManager.getLogger();
     private final Path baseDirectory;
     private final StringValidatorImpl stringValidator;
-    private static final Logger logger = LogManager.getLogger();
+
 
     public SuperReaderImpl(Path baseDirectory, StringValidatorImpl stringValidator) throws CustomArrayException {
         if (baseDirectory == null) {
