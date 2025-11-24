@@ -20,8 +20,8 @@ public class SuperParserIntImpl implements SuperParserInt {
                 int[] parsedLine = parseLine(array.get(i));
                 result.add(parsedLine);
             }
+            logger.warn("The string is empty.");
         }
-        logger.log(Level.INFO, "Parser worked.");
         return result;
     }
 
