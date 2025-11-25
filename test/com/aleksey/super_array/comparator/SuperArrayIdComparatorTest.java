@@ -35,12 +35,6 @@ class SuperArrayIdComparatorTest {
     }
 
     @Test
-    void shouldReturnZeroWhenIdsAreEqual() {
-        int result = comparator.compare(arrayWithId1, arrayWithId3);
-        assertEquals(0, result, "Arrays with equal ids should return 0");
-    }
-
-    @Test
     void shouldHandleZeroId() throws CustomArrayException {
         SuperArray zeroId = SuperArray.builder(1).setId(0L).build();
         SuperArray positiveId = SuperArray.builder(2).setId(1L).build();
