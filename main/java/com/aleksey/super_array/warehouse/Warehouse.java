@@ -33,6 +33,7 @@ public class Warehouse {
         if (superArray == null) {
             return;
         }
+        logger.info("Update statistic in warehouse.");
         statistics.put(superArray.getId(), SuperArrayStatistic.from(superArray));
     }
 
