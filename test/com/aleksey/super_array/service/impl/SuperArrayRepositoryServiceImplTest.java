@@ -4,7 +4,6 @@ import com.aleksey.super_array.comparator.SuperArrayIdComparator;
 import com.aleksey.super_array.comparator.SuperArrayLengthComparator;
 import com.aleksey.super_array.entity.SuperArray;
 import com.aleksey.super_array.excepsion.CustomArrayException;
-import com.aleksey.super_array.repository.impl.SuperArrayRepositoryImpl;
 import com.aleksey.super_array.service.SuperArrayRepositoryService;
 import com.aleksey.super_array.specification.impl.ContainsElementSpecification;
 import com.aleksey.super_array.specification.impl.IdSpecification;
@@ -63,7 +62,7 @@ class SuperArrayRepositoryServiceImplTest {
     }
 
     @Test
-    void shouldAddAllSuperArrays() throws CustomArrayException {
+    void shouldAddAllSuperArrays() {
         List<SuperArray> arrays = new ArrayList<>();
         arrays.add(array1);
         arrays.add(array2);
